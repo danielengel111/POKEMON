@@ -3,6 +3,7 @@ from . import views
 
 urlpatterns = [
     path('', views.home, name='home'),
-    path('', views.query_results, name='home'),
-    path('', views.add_pokemon, name='home')
+    path('home', views.home, name='home'),
+    path('query_results', views.query_results, name='query_results'),
+    path('add_pokemon', views.add_pokemon, name='add_pokemon')
 ]
