@@ -13,7 +13,7 @@ def home(request):
     return render(request, 'home.html')
 
 
-def query_results(request):
+def query():
     with connection.cursor() as cursor:
         cursor.execute("""
         select Generation, Name
@@ -70,8 +70,37 @@ def query_results(request):
             );
                      """)
         sql_res3 = dictfetchall(cursor)
+    return sql_res1, sql_res2, sql_res3
+
+
+def query_results(request):
+    sql_res1, sql_res2, sql_res3 = query()
     return render(request, 'query_results.html', {'sql_res1': sql_res1, 'sql_res2': sql_res2,
-                                                  'sql_res3': sql_res3})
+                                                  'sql_res3': sql_res3, 'sql_res4': []})
+
+
+def run_query(request):
+    sql_res1, sql_res2, sql_res3 = query()
+    attack_threshold = request.POST['attack_threshold']
+    pokemon_count = request.POST['pokemon_count']
+    with connection.cursor() as cursor:
+        cursor.execute(f"""
+        select distinct countTable.Type as countType
+        from (select Type, count(*) pokemon_count
+            from Pokemons
+            group by Type
+            ) countTable
+        inner join
+            (select Type
+            from Pokemons
+            where Attack > {attack_threshold}
+            ) attackTable
+        on countTable.Type = attackTable.Type
+        where pokemon_count > {pokemon_count}
+        """)
+        sql_res4 = dictfetchall(cursor)
+    return render(request, 'query_results.html', {'sql_res1': sql_res1, 'sql_res2': sql_res2,
+                                                  'sql_res3': sql_res3, 'sql_res4': sql_res4})
 
 
 def add_pokemon(request):
