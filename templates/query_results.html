@@ -2,9 +2,52 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Pokemon Website</title>
 </head>
-<body>
+<body style="background-color:gainsboro; text-align:center; margin-top: 10px" >
+    <H1>Simple Pokemon League Website</H1>
 
+    <label>Strongest Pokemons that are legendary, by generation:</label><br>
+    <table border="1" width="40%">
+        <th>Generation</th>
+        <th>Pokemon</th>
+        {% for content in sql_res1 %}
+            <tr>
+                <td>{{ content.Generation }} </td>
+                <td>{{ content.Pokemon }} </td>
+            </tr>
+        {% endfor %}
+    </table><br>
+
+    <label>Dominant Pokemons, by type:</label>
+    <table border="1" width="40%">
+        <th>Type</th>
+        <th>Pokemon</th>
+        {% for content in sql_res2 %}
+            <tr>
+                <td>{{ content.Type }} </td>
+                <td>{{ content.Pokemon }} </td>
+            </tr>
+        {% endfor %}
+    </table><br>
+
+    <label>Type with strongest Pokemon stronger than Attack Threshold and more than Pokemon Count Pokemons:</label><br>
+    <label>Attack Threshold:</label><br>
+    <label>Pokemon Count:</label><br>
+    <label>Type with highest average instability:</label><br>
+    <table border="1" width="40%">
+        <th>Type</th>
+        <th>Average Instability</th>
+        {% for content in sql_res3 %}
+            <tr>
+                <td>{{ content.Type }} </td>
+                <td>{{ content.average_instability }} </td>
+            </tr>
+        {% endfor %}
+    </table><br>
+
+    <a href="home">Home</a><br>
+    <a href="query_results">Query Results</a><br>
+    <a href="add_pokemon">Add a Pokemon</a>
 </body>
 </html>
