@@ -8,7 +8,7 @@
     <H1>Simple Pokemon League Website</H1>
 
     <label>Strongest Pokemons that are legendary, by generation:</label>
-    <table border="1" width="40%" align="center">
+    <table border="1" align="center">
         <th>Generation</th>
         <th>Pokemon</th>
         {% for content in sql_res1 %}
@@ -20,7 +20,7 @@
     </table><br>
 
     <label>Dominant Pokemons, by type:</label>
-    <table border="1" width="40%" align="center">
+    <table border="1" align="center">
         <th>Type</th>
         <th>Pokemon</th>
         {% for content in sql_res2 %}
@@ -31,18 +31,21 @@
         {% endfor %}
     </table><br>
 
-    <label>Type with strongest Pokemon stronger than Attack Threshold and more than Pokemon Count Pokemons:</label><br>
+    <label>Type with strongest Pokemon stronger than
+        <span style="color: #ffa500">Attack Threshold</span> and more than
+        <span style="color: #ffa500">Pokemon Count</span> Pokemons:
+    </label><br>
     <label>Attack Threshold:</label><br>
     <label>Pokemon Count:</label><br>
 
     <label>Type with highest average instability:</label>
-    <table border="1" width="40%" align="center">
+    <table border="1" align="center">
         <th>Type</th>
         <th>Average Instability</th>
         {% for content in sql_res3 %}
             <tr>
                 <td>{{ content.Type }} </td>
-                <td>{{ content.average_instability }} </td>
+                <td>{{ content.av_instability }} </td>
             </tr>
         {% endfor %}
     </table><br>

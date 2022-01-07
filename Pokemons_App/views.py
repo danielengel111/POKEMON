@@ -57,9 +57,17 @@ def query_results(request):
              """)
         sql_res2 = dictfetchall(cursor)
         cursor.execute("""
-                     SELECT Name, Attack
-                     FROM Pokemons
-                     WHERE Legendary=1;
+        select Type, round(average_instability, 2) as av_instability
+        from (
+            select Type, avg(CAST(abs(Defense - Attack) AS FLOAT)) as average_instability
+            from Pokemons
+            group by Type
+        ) avg_inst_table
+        where average_instability >= all(
+            select avg(CAST(abs(Defense - Attack) AS FLOAT))
+            from Pokemons
+            group by Type
+            );
                      """)
         sql_res3 = dictfetchall(cursor)
     return render(request, 'query_results.html', {'sql_res1': sql_res1, 'sql_res2': sql_res2,
