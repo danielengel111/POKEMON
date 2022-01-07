@@ -16,15 +16,44 @@ def home(request):
 def query_results(request):
     with connection.cursor() as cursor:
         cursor.execute("""
-     SELECT Name, Attack
-     FROM Pokemons
-     WHERE Legendary=1;
-     """)
+        select Generation, Name
+        from Pokemons as P1
+        where
+            Legendary = 1
+          and
+            HP + Attack + Defense >= all(
+                  select P2.HP + P2.Attack + P2.Defense
+                  from Pokemons as P2
+                  where P2.Generation = P1.Generation
+                )
+        order by Generation asc;
+        """)
         sql_res1 = dictfetchall(cursor)
         cursor.execute("""
-             SELECT Name, Attack
-             FROM Pokemons
-             WHERE Legendary=1;
+        select Type, Name
+        from Pokemons as P
+        where
+            HP > all(
+                select P2.HP
+                from Pokemons as P2
+                where P2.Type = P.Type
+                and not P2.Name = P.Name
+                )
+        and
+            Attack > all(
+                select P2.Attack
+                from Pokemons as P2
+                where P2.Type = P.Type
+                and not P2.Name = P.Name
+                )
+        and
+            Defense > all(
+                select P2.Defense
+                from Pokemons as P2
+                where P2.Type = P.Type
+                and not P2.Name = P.Name
+                )
+        order by Type asc;
              """)
         sql_res2 = dictfetchall(cursor)
         cursor.execute("""
