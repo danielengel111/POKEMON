@@ -105,3 +105,15 @@ def run_query(request):
 
 def add_pokemon(request):
     return render(request, 'add_pokemon.html')
+def add(request):
+    poke_name=request.POST['name']
+    poke_type=request.POST['type']
+    poke_gen=request.POST['gen']
+    poke_status=request.POST['legendary']
+    poke_hp=request.POST['hp']
+    poke_attack=request.POST['atk']
+    poke_defense=request.POST['def']
+    new_pokemon=Pokemon(Name=poke_name,Type=poke_type,Generation=poke_gen,Legendary=poke_status,Hp=poke_hp,Attack=poke_attack,Defense=poke_defense)
+    new_pokemon.save()
+    return render(request, 'add_pokemon.html')
+
