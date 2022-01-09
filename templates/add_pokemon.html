@@ -12,13 +12,13 @@
 
     <form method="POST" action="add">
         {% csrf_token %}
-	    Name: <input type="text" name="name"> <br>
-        Type: <input type="text" name="type"> <br>
-	    Generation: <input type="text" name="gen"> <br>
-        Legendary: <input type="checkbox" name="legendary"><br>
-	    Hp: <input type="text" name="hp"> <br>
-	    Attack: <input type="text" name="atk"> <br>
-        Defense: <input type="text" name="def"> <br>
+	    Name: <input type="text" name="name" required> <br>
+        Type: <input type="text" name="type" required> <br>
+	    Generation: <input type="text" name="gen" required> <br>
+        Legendary: <input type="checkbox" name="legendary" value="true"><br>
+	    Hp: <input type="text" name="hp" required> <br>
+	    Attack: <input type="text" name="atk" required> <br>
+        Defense: <input type="text" name="def" required> <br>
         <input type="submit">
     </form>
 </body>
